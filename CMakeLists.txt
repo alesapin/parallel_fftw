@@ -20,7 +20,7 @@ add_custom_command(
     VERBATIM
 )
 add_custom_target(FFTW_BUILD ALL DEPENDS ${FFTW_INCLUDE})
-
+set(CMAKE_CXX_FLAGS "--std=gnu99 ${CMAKE_CXX_FLAGS}")
 find_package(MPI REQUIRED)
 include_directories(${FFTW_INCLUDE})
 include_directories(${MPI_INCLUDE_PATH})
