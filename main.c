@@ -55,7 +55,7 @@ int main(int argc, char **argv) {
     MPI_Barrier(MPI_COMM_WORLD);
     if (rank == 0) {
         time_end = MPI_Wtime();
-        printf("%f\n", time_end - time_start);
+        printf("%d\t%d\t%f\n", total_size, size,time_end - time_start);
     }
     fftw_destroy_plan(plan);
 
