@@ -28,7 +28,8 @@ if __name__ == "__main__":
 
     surf = ax.plot_surface(xig, yig, zi, cmap=cm.rainbow_r, rstride=1, cstride=1)
     cbar = fig.colorbar(surf, shrink=0.8, aspect=10)
-    cbar.ax.set_yticklabels([str(i) for i in xrange(int(Z.min()), int(Z.max()+1))])
+    cbar.remove()
+    #cbar.ax.set_yticklabels([str(i) for i in xrange(int(Z.min()), int(Z.max()+1))])
     ax.set_zlim(zmin=0)
     ax.set_ylim(ymin=0)
     ax.set_xlim(xmin=0)
