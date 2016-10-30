@@ -21,11 +21,11 @@ def single_run(bin_path, proc_num, size):
     file_name = str(bin_path) + "_" + str(proc_num) + "_" + str(size) + "_" + str(int(time.time()))
     command = [RUNNER_NAME, "--env", '"BG_SHAREDMEMPOOLSIZE=256"', "-n", str(proc_num), "--stdout",
                file_name, bin_path, "--", "-s", str(size)]
-    logging.info("Job started:" + get_started_job(subprocess.check_output(command)))
+    subprocess.check_output(command)
     return file_name
 
 def get_queued_jobs():
-    result = subprocess.Popen('llq | tail -n 1 | cut -d" " -f1', shell=True, stdout=subprocess.PIPE).stdout.read()
+    result = subprocess.Popen('llq -u `whoami` | tail -n 1 | cut -d" " -f1', shell=True, stdout=subprocess.PIPE).stdout.read()
     try:
         value = int(result)
     except ValueError:
@@ -62,10 +62,10 @@ def main():
     files =[]
     waiter_thread = threading.Thread(target=waiter)
     waiter_thread.start()
-    for proc_num in [int(pow(2,i)) for i in xrange(3, 10)]:
+    for proc_num in [int(pow(2,i)) for i in xrange(6, 10)]:
         if proc_num > args.maxproc:
             break
-        for size in [int(pow(2,i)) for i in xrange(15, 30)]:
+        for size in [int(pow(2,i)) for i in xrange(15, 27)]:
             if size / proc_num >= 128:
                 fname = single_run(args.binpath, proc_num, size)
                 files.append(fname)

@@ -20,12 +20,15 @@ add_custom_command(
     VERBATIM
 )
 add_custom_target(FFTW_BUILD ALL DEPENDS ${FFTW_INCLUDE})
-set(CMAKE_CXX_FLAGS "--std=gnu99 ${CMAKE_CXX_FLAGS}")
+set(CMAKE_C_FLAGS "--std=gnu99 ${CMAKE_CXX_FLAGS}")
 find_package(MPI REQUIRED)
 include_directories(${FFTW_INCLUDE})
 include_directories(${MPI_INCLUDE_PATH})
 
 set(CMAKE_C_COMPILER "mpicc")
 add_executable( FFTW_MPI main.c )
+add_executable( FFTW_SEQ main_seq.c )
 add_dependencies(FFTW_MPI FFTW_BUILD)
+add_dependencies(FFTW_SEQ FFTW_BUILD)
 target_link_libraries(FFTW_MPI ${MPI_C_LIBRARIES} ${FFTW_LIBS} m)
+target_link_libraries(FFTW_SEQ ${FFTW_LIBS} m)
